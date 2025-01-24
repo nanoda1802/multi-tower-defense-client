@@ -24,10 +24,9 @@ public class PopupLogin : UIBase
 
     public void OnClickLogin()
     {
-        UIManager.Get<PopupLogin>().OnLoginResult(true);
-        //GamePacket gamePacket = new GamePacket();
-        //gamePacket.LoginRequest = new C2SLoginRequest() { Id = inputId.text, Password = inputPw.text };
-        //SocketManager.instance.Send(gamePacket);
+        GamePacket gamePacket = new GamePacket();
+        gamePacket.LoginRequest = new C2SLoginRequest() { Id = inputId.text, Password = inputPw.text };
+        SocketManager.instance.Send(gamePacket);
     }
 
     public void OnLoginResult(bool isSuccess)
