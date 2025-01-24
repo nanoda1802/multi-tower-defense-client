@@ -130,7 +130,7 @@ public class GameManager : MonoSingleton<GameManager>
         int count = 0;
         do
         {
-            rand = Util.Random(4, 20);
+            rand = Util.Random(5,roads1.Count-5);
             count++;
             if (count > 15) break;
         } while (usesTowerPositions.Contains(rand));
@@ -190,7 +190,7 @@ public class GameManager : MonoSingleton<GameManager>
     public Vector3 CalcRandomTowerPosition()
     {
         var rand = GetRandomTowerPositionIndex();
-        var position = roads1[rand].transform.localPosition + new Vector3(0, Util.Random(-1.5f, 1.5f));
+        var position = roads1[rand].transform.localPosition + new Vector3(0, Util.Random(-100,100));
         //usesTowerPositions.Add(rand);
         return position;
     }
