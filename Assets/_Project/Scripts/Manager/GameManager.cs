@@ -206,7 +206,6 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void SetTower(int towerId)
     {
-        towers.Last().towerId = towerId;
         var tower = AddTower(randomTowerPosition.x, randomTowerPosition.y, ePlayer.me);
         tower.Init(DataManager.instance.GetData<TowerDataSO>("TOW00001"));
         tower.towerId = towerId;
