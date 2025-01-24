@@ -10,18 +10,17 @@ public class AudioManager : MonoSingleton<AudioManager>
 {
     [SerializeField] private AudioSource source;
     [SerializeField] private Dictionary<string, AudioClip> audioPool = new Dictionary<string, AudioClip>();
-
     [HideInInspector] public bool isInit;
     public void Init()
     {
     }
-
     public void PlayBgm(string key, bool isLoop = true)
     {
         if (!audioPool.ContainsKey(key))
             audioPool.Add(key, ResourceManager.instance.LoadAsset<AudioClip>("Sound/" + key));
         source.clip = audioPool[key];
         source.loop = isLoop;
+        source.volume = 0.2f; // 볼륨 줄이기 추가
         source.Play();
     }
 
