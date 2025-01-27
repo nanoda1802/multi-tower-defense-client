@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using System.Net.Sockets;
 
 public class UIMain : UIBase
 {
@@ -67,6 +68,11 @@ public class UIMain : UIBase
 
     public void OnClickGameStart()
     {
+        if (SocketManager.instance.socket.Poll(0, SelectMode.SelectRead))
+        {
+            GameManager.instance.isLogin = false;
+            SceneManager.LoadSceneAsync("Main");
+        }
         //SceneManager.LoadSceneAsync("Game");
         GamePacket gamePacket = new GamePacket();
         gamePacket.MatchRequest = new C2SMatchRequest();

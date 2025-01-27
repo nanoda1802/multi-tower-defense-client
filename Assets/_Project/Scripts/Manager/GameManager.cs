@@ -7,6 +7,8 @@ using System;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using System.Threading;
+using System.Net.Sockets;
+using System.Net.Http;
 
 public class GameManager : MonoSingleton<GameManager>
 {
@@ -222,6 +224,17 @@ public class GameManager : MonoSingleton<GameManager>
         towers.Clear();
         StopAllCoroutines();
         StartCoroutine(OnSceneChange());
+        // 소켓 Poll 확인  
+        bool pollCheck = SocketManager.instance.socket.Poll(0, SelectMode.SelectRead);
+
+        // 데이터 가용성 확인  
+        bool availableCheck = SocketManager.instance.socket.Available == 0;
+
+        // 소켓 상태 추가 확인  
+        bool socketAlive = SocketManager.instance.socket.Connected;
+        Debug.Log(pollCheck);
+        Debug.Log(availableCheck);
+        Debug.Log(socketAlive);
     }
 
     IEnumerator OnSceneChange()
@@ -229,6 +242,11 @@ public class GameManager : MonoSingleton<GameManager>
         yield return new WaitForSeconds(5);
         AudioManager.instance.StopBgm();
         SceneManager.LoadSceneAsync("Main");
+        // 소켓 Poll 확인  
+        if (SocketManager.instance.socket.Poll(0, SelectMode.SelectRead))
+        {
+            isLogin = false;
+        }
     }
 
     IEnumerator MultiGameLoop()
