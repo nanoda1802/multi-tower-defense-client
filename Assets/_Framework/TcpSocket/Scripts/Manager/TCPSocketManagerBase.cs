@@ -59,6 +59,8 @@ public abstract class TCPSocketManagerBase<T> : MonoSingleton<T> where T : TCPSo
     {
         this.ip = ip;
         this.port = port;
+        sendQueue = new Queue<Packet>();
+        receiveQueue = new Queue<Packet>();
         _onRecv = new Dictionary<PayloadOneofCase, Action<GamePacket>>();
         sequenceNumber = 1;
         InitPackets();
